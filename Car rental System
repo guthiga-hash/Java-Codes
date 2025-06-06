@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+class Car {
+    String model;
+    String plateNumber;
+    boolean isRented;
+
+    public Car(String model, String plateNumber) {
+        this.model = model;
+        this.plateNumber = plateNumber;
+        this.isRented = false;
+    }
+
+    public void rentCar() {
+        if (!isRented) {
+            isRented = true;
+            System.out.println("Car rented successfully!");
+        } else {
+            System.out.println("Car is already rented.");
+        }
+    }
+
+    public void returnCar() {
+        isRented = false;
+        System.out.println("Car returned successfully!");
+    }
+}
+
+class LoginSystem {
+    public boolean authenticate() {
+        Scanner scanner = new Scanner(System.in);
+        String correctUsername = "admin";
+        String correctPassword = "password";
+        int attempts = 3;
+
+        while (attempts > 0) {
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine();
+
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine().replaceAll(".", "*");
+
+            if (username.equals(correctUsername) && password.equals("*******")) {
+                System.out.println("Login successful!");
+                return true;
+            } else {
+                attempts--;
+                System.out.println("Incorrect credentials. Attempts left: " + attempts);
+            }
+        }
+
+        System.out.println("Access denied.");
+        return false;
+    }
+}
+
+public class RentalApp {
+    public static void main(String[] args) {
+        LoginSystem loginSystem = new LoginSystem();
+
+        if (loginSystem.authenticate()) {
+            Car car1 = new Car("Toyota Corolla", "ABC123");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Choose an option: \n1. Rent a Car \n2. Return a Car");
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                car1.rentCar();
+            } else if (choice == 2) {
+                car1.returnCar();
+            } else {
+                System.out.println("Invalid choice.");
+            }
+
+            scanner.close();
+        }
+    }
+}
